@@ -1,0 +1,91 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f8;
+    color: #222;
+}
+
+.topo {
+    background: #1f3a5f;
+    color: white;
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.topo h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.topo nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.topo nav a:hover {
+    text-decoration: underline;
+}
+
+.conteudo {
+    max-width: 1100px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+
+.grade {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.cartao {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.cartao h3 {
+    margin: 8px 0;
+}
+
+.categoria {
+    font-size: 12px;
+    color: #1f3a5f;
+    background: #e3ecf7;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.quantidade {
+    font-weight: bold;
+}
+
+.selo {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    color: white;
+}
+
+.selo.disponivel {
+    background: #2e8b57;
+}
+
+.selo.emprestado {
+    background: #c0392b;
+}
+
+.rodape {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}

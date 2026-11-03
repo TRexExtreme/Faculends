@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block titulo %}Catálogo - Faculends{% endblock %}
+
+{% block conteudo %}
+<h2>Catálogo de materiais</h2>
+
+{% if materiais %}
+<div class="grade">
+    {% for m in materiais %}
+    <article class="cartao">
+        <span class="categoria">{{ m["categoria"] }}</span>
+        <h3>{{ m["nome"] }}</h3>
+        <p>{{ m["descricao"] }}</p>
+        <p class="quantidade">
+            {{ m["quantidade_disponivel"] }} de {{ m["quantidade_total"] }} disponíveis
+        </p>
+        {% if m["quantidade_disponivel"] > 0 %}
+            <span class="selo disponivel">Disponível</span>
+        {% else %}
+            <span class="selo emprestado">Emprestado</span>
+        {% endif %}
+    </article>
+    {% endfor %}
+</div>
+{% else %}
+<p>Nenhum material cadastrado.</p>
+{% endif %}
+{% endblock %}
