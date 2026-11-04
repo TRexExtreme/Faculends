@@ -5,6 +5,22 @@
 {% block conteudo %}
 <h2>Catálogo de materiais</h2>
 
+<form class="filtros" method="get" action="{{ url_for('catalogo') }}">
+    <input type="text" name="busca" placeholder="Pesquisar por nome ou descrição" value="{{ busca }}">
+
+    <select name="categoria">
+        <option value="">Todas as categorias</option>
+        {% for c in categorias %}
+        <option value="{{ c['categoria'] }}" {% if c['categoria'] == categoria_selecionada %}selected{% endif %}>
+            {{ c['categoria'] }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Filtrar</button>
+    <a class="limpar" href="{{ url_for('catalogo') }}">Limpar</a>
+</form>
+
 {% if materiais %}
 <div class="grade">
     {% for m in materiais %}
@@ -24,6 +40,6 @@
     {% endfor %}
 </div>
 {% else %}
-<p>Nenhum material cadastrado.</p>
+<p>Nenhum material encontrado.</p>
 {% endif %}
 {% endblock %}

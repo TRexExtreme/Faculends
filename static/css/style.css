@@ -89,3 +89,42 @@ body {
     padding: 20px;
     color: #666;
 }
+
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.filtros input,
+.filtros select {
+    padding: 8px 10px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.filtros input {
+    flex: 1;
+    min-width: 220px;
+}
+
+.filtros button {
+    padding: 8px 16px;
+    background: #1f3a5f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.filtros button:hover {
+    background: #2a4d7d;
+}
+
+.filtros .limpar {
+    align-self: center;
+    color: #1f3a5f;
+    font-size: 14px;
+}
