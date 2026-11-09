@@ -41,5 +41,16 @@ def catalogo():
     )
 
 
+# ---------- Solicitações ----------
+@app.route("/solicitacoes")
+def solicitacoes():
+    conn = get_db()
+    lista = conn.execute(
+        "SELECT * FROM solicitacoes ORDER BY id DESC"
+    ).fetchall()
+    conn.close()
+    return render_template("solicitacoes.html", solicitacoes=lista)
+
+
 if __name__ == "__main__":
     app.run(debug=True)

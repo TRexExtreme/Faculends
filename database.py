@@ -38,6 +38,19 @@ def init_db():
         )
         """
     )
+    conn.execute(
+        """
+        CREATE TABLE IF NOT EXISTS solicitacoes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            material_id INTEGER NOT NULL,
+            solicitante TEXT NOT NULL,
+            data_solicitacao TEXT NOT NULL,
+            status TEXT NOT NULL DEFAULT 'pendente'
+                CHECK (status IN ('pendente', 'aprovada', 'rejeitada', 'retirada', 'devolvida')),
+            FOREIGN KEY (material_id) REFERENCES materiais (id)
+        )
+        """
+    )
     total = conn.execute("SELECT COUNT(*) FROM materiais").fetchone()[0]
     if total == 0:
         conn.executemany(

@@ -128,3 +128,24 @@ body {
     color: #1f3a5f;
     font-size: 14px;
 }
+
+.tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.tabela th,
+.tabela td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.tabela th {
+    background: #1f3a5f;
+    color: white;
+}

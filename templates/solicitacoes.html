@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block titulo %}Solicitações - Faculends{% endblock %}
+
+{% block conteudo %}
+<h2>Solicitações</h2>
+
+{% if solicitacoes %}
+<table class="tabela">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Material (id)</th>
+            <th>Solicitante</th>
+            <th>Data</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in solicitacoes %}
+        <tr>
+            <td>{{ s["id"] }}</td>
+            <td>{{ s["material_id"] }}</td>
+            <td>{{ s["solicitante"] }}</td>
+            <td>{{ s["data_solicitacao"] }}</td>
+            <td>{{ s["status"] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Nenhuma solicitação registrada ainda.</p>
+{% endif %}
+{% endblock %}

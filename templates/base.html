@@ -7,20 +7,21 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
- <header class="topo">
-    <h1>Faculends</h1>
+    <header class="topo">
+        <h1>Faculends</h1>
         <nav>
             <a href="{{ url_for('catalogo') }}">Catálogo</a>
+            <a href="{{ url_for('solicitacoes') }}">Solicitações</a>
             {% block menu_extra %}{% endblock %}
         </nav>
- </header> 
+    </header>
 
- <main class="conteudo">
+    <main class="conteudo">
         {% block conteudo %}{% endblock %}
-</main>
+    </main>
 
- <footer class="rodape">
-    <p>Faculends - Empréstimo de materiais de faculdade</p>
- </footer>  
+    <footer class="rodape">
+        <p>Faculends - Empréstimo de materiais da faculdade</p>
+    </footer>
 </body>
 </html>
