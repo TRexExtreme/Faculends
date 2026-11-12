@@ -149,3 +149,78 @@ body {
     background: #1f3a5f;
     color: white;
 }
+
+.botao {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 4px 12px;
+    background: #1f3a5f;
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 13px;
+}
+
+.botao:hover {
+    background: #2a4d7d;
+}
+
+.alerta {
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+}
+
+.alerta.sucesso {
+    background: #e3f4ea;
+    color: #1e6b41;
+    border: 1px solid #2e8b57;
+}
+
+.alerta.erro {
+    background: #fbe9e7;
+    color: #a12a1e;
+    border: 1px solid #c0392b;
+}
+
+.resumo {
+    max-width: 420px;
+    margin-bottom: 20px;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 420px;
+}
+
+.formulario label {
+    font-weight: bold;
+}
+
+.formulario input {
+    padding: 8px 10px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.formulario button {
+    padding: 8px 16px;
+    background: #1f3a5f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.formulario button:hover {
+    background: #2a4d7d;
+}
+
+.formulario .acoes {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}

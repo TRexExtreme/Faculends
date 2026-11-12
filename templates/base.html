@@ -17,6 +17,12 @@
     </header>
 
     <main class="conteudo">
+        {% with mensagens = get_flashed_messages() %}
+            {% for msg in mensagens %}
+            <div class="alerta sucesso">{{ msg }}</div>
+            {% endfor %}
+        {% endwith %}
+
         {% block conteudo %}{% endblock %}
     </main>
 

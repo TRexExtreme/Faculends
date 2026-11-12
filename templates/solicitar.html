@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block titulo %}Solicitar material - Faculends{% endblock %}
+
+{% block conteudo %}
+<h2>Solicitar material</h2>
+
+<article class="cartao resumo">
+    <span class="categoria">{{ material["categoria"] }}</span>
+    <h3>{{ material["nome"] }}</h3>
+    <p>{{ material["descricao"] }}</p>
+    <p class="quantidade">
+        {{ material["quantidade_disponivel"] }} de {{ material["quantidade_total"] }} disponíveis
+    </p>
+</article>
+
+{% if erro %}
+<div class="alerta erro">{{ erro }}</div>
+{% endif %}
+
+{% if material["quantidade_disponivel"] > 0 %}
+<form class="formulario" method="post">
+    <label for="solicitante">Seu nome</label>
+    <input type="text" id="solicitante" name="solicitante"
+           value="{{ solicitante }}" maxlength="80" required>
+
+    <div class="acoes">
+        <button type="submit">Enviar solicitação</button>
+        <a class="limpar" href="{{ url_for('catalogo') }}">Cancelar</a>
+    </div>
+</form>
+{% else %}
+<p>Este material não está disponível no momento.</p>
+<a class="limpar" href="{{ url_for('catalogo') }}">Voltar ao catálogo</a>
+{% endif %}
+{% endblock %}

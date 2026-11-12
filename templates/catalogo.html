@@ -33,6 +33,7 @@
         </p>
         {% if m["quantidade_disponivel"] > 0 %}
             <span class="selo disponivel">Disponível</span>
+            <a class="botao" href="{{ url_for('solicitar', material_id=m['id']) }}">Solicitar</a>
         {% else %}
             <span class="selo emprestado">Emprestado</span>
         {% endif %}

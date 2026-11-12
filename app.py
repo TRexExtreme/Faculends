@@ -1,7 +1,12 @@
-from flask import Flask, render_template, request
+from datetime import datetime
+
+from flask import (
+    Flask, abort, flash, redirect, render_template, request, url_for
+)
 from database import init_db, get_db
 
 app = Flask(__name__)
+app.secret_key = "faculends-chave-de-desenvolvimento"
 init_db()
 
 
@@ -50,6 +55,50 @@ def solicitacoes():
     ).fetchall()
     conn.close()
     return render_template("solicitacoes.html", solicitacoes=lista)
+
+
+@app.route("/solicitar/<int:material_id>", methods=["GET", "POST"])
+def solicitar(material_id):
+    conn = get_db()
+    material = conn.execute(
+        "SELECT * FROM materiais WHERE id = ?", (material_id,)
+    ).fetchone()
+
+    if material is None:
+        conn.close()
+        abort(404)
+
+    erro = None
+    solicitante = ""
+
+    if request.method == "POST":
+        solicitante = request.form.get("solicitante", "").strip()
+
+        if len(solicitante) < 3:
+            erro = "Informe seu nome (mínimo de 3 caracteres)."
+        elif len(solicitante) > 80:
+            erro = "O nome pode ter no máximo 80 caracteres."
+        elif material["quantidade_disponivel"] <= 0:
+            erro = "Este material não está disponível no momento."
+        else:
+            data = datetime.now().strftime("%Y-%m-%d %H:%M")
+            conn.execute(
+                """
+                INSERT INTO solicitacoes
+                (material_id, solicitante, data_solicitacao, status)
+                VALUES (?, ?, ?, 'pendente')
+                """,
+                (material_id, solicitante, data),
+            )
+            conn.commit()
+            conn.close()
+            flash(f"Solicitação de {material['nome']} enviada com sucesso!")
+            return redirect(url_for("solicitacoes"))
+
+    conn.close()
+    return render_template(
+        "solicitar.html", material=material, erro=erro, solicitante=solicitante
+    )
 
 
 if __name__ == "__main__":
