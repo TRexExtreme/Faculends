@@ -10,7 +10,7 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>Material (id)</th>
+            <th>Material</th>
             <th>Solicitante</th>
             <th>Data</th>
             <th>Status</th>
@@ -20,10 +20,13 @@
         {% for s in solicitacoes %}
         <tr>
             <td>{{ s["id"] }}</td>
-            <td>{{ s["material_id"] }}</td>
+            <td>
+                {{ s["material_nome"] }}
+                <span class="categoria">{{ s["material_categoria"] }}</span>
+            </td>
             <td>{{ s["solicitante"] }}</td>
             <td>{{ s["data_solicitacao"] }}</td>
-            <td>{{ s["status"] }}</td>
+            <td><span class="status {{ s['status'] }}">{{ s["status"] }}</span></td>
         </tr>
         {% endfor %}
     </tbody>

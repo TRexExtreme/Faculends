@@ -224,3 +224,37 @@ body {
     align-items: center;
     gap: 12px;
 }
+
+.status {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.status.pendente {
+    background: #fff3cd;
+    color: #8a6d0b;
+}
+
+.status.aprovada {
+    background: #e3f4ea;
+    color: #1e6b41;
+}
+
+.status.rejeitada {
+    background: #fbe9e7;
+    color: #a12a1e;
+}
+
+.status.retirada {
+    background: #e3ecf7;
+    color: #1f3a5f;
+}
+
+.status.devolvida {
+    background: #eceff1;
+    color: #546e7a;
+}

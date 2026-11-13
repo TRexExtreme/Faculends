@@ -51,7 +51,13 @@ def catalogo():
 def solicitacoes():
     conn = get_db()
     lista = conn.execute(
-        "SELECT * FROM solicitacoes ORDER BY id DESC"
+        """
+        SELECT s.id, s.solicitante, s.data_solicitacao, s.status,
+               m.nome AS material_nome, m.categoria AS material_categoria
+        FROM solicitacoes s
+        JOIN materiais m ON m.id = s.material_id
+        ORDER BY s.id DESC
+        """
     ).fetchall()
     conn.close()
     return render_template("solicitacoes.html", solicitacoes=lista)
