@@ -258,3 +258,34 @@ body {
     background: #eceff1;
     color: #546e7a;
 }
+
+.inline {
+    display: inline;
+}
+
+.btn-aprovar,
+.btn-rejeitar {
+    padding: 4px 12px;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 13px;
+    cursor: pointer;
+    margin-right: 4px;
+}
+
+.btn-aprovar {
+    background: #2e8b57;
+}
+
+.btn-aprovar:hover {
+    background: #26734a;
+}
+
+.btn-rejeitar {
+    background: #c0392b;
+}
+
+.btn-rejeitar:hover {
+    background: #a12a1e;
+}

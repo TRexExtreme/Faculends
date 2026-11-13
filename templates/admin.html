@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block titulo %}Responsável - Faculends{% endblock %}
+
+{% block conteudo %}
+<h2>Painel do responsável</h2>
+
+{% if solicitacoes %}
+<table class="tabela">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Material</th>
+            <th>Solicitante</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in solicitacoes %}
+        <tr>
+            <td>{{ s["id"] }}</td>
+            <td>
+                {{ s["material_nome"] }}
+                <span class="categoria">{{ s["material_categoria"] }}</span>
+            </td>
+            <td>{{ s["solicitante"] }}</td>
+            <td>{{ s["data_solicitacao"] }}</td>
+            <td><span class="status {{ s['status'] }}">{{ s["status"] }}</span></td>
+            <td>
+                {% if s["status"] == "pendente" %}
+                <form class="inline" method="post"
+                      action="{{ url_for('aprovar', solicitacao_id=s['id']) }}">
+                    <button type="submit" class="btn-aprovar">Aprovar</button>
+                </form>
+                <form class="inline" method="post"
+                      action="{{ url_for('rejeitar', solicitacao_id=s['id']) }}">
+                    <button type="submit" class="btn-rejeitar">Rejeitar</button>
+                </form>
+                {% else %}
+                -
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Nenhuma solicitação registrada ainda.</p>
+{% endif %}
+{% endblock %}

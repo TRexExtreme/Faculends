@@ -107,5 +107,57 @@ def solicitar(material_id):
     )
 
 
+# ---------- Responsável (administração) ----------
+@app.route("/admin")
+def admin():
+    conn = get_db()
+    lista = conn.execute(
+        """
+        SELECT s.id, s.solicitante, s.data_solicitacao, s.status,
+               m.nome AS material_nome, m.categoria AS material_categoria
+        FROM solicitacoes s
+        JOIN materiais m ON m.id = s.material_id
+        ORDER BY CASE WHEN s.status = 'pendente' THEN 0 ELSE 1 END, s.id DESC
+        """
+    ).fetchall()
+    conn.close()
+    return render_template("admin.html", solicitacoes=lista)
+
+
+def mudar_status(solicitacao_id, novo_status, mensagem):
+    """Muda o status de um pedido, só se ele ainda estiver pendente."""
+    conn = get_db()
+    pedido = conn.execute(
+        "SELECT id, status FROM solicitacoes WHERE id = ?", (solicitacao_id,)
+    ).fetchone()
+
+    if pedido is None:
+        conn.close()
+        abort(404)
+
+    if pedido["status"] != "pendente":
+        flash("Esta solicitação já foi analisada.")
+    else:
+        conn.execute(
+            "UPDATE solicitacoes SET status = ? WHERE id = ?",
+            (novo_status, solicitacao_id),
+        )
+        conn.commit()
+        flash(mensagem)
+
+    conn.close()
+    return redirect(url_for("admin"))
+
+
+@app.route("/admin/solicitacao/<int:solicitacao_id>/aprovar", methods=["POST"])
+def aprovar(solicitacao_id):
+    return mudar_status(solicitacao_id, "aprovada", "Solicitação aprovada.")
+
+
+@app.route("/admin/solicitacao/<int:solicitacao_id>/rejeitar", methods=["POST"])
+def rejeitar(solicitacao_id):
+    return mudar_status(solicitacao_id, "rejeitada", "Solicitação rejeitada.")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
