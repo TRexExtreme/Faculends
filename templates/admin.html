@@ -38,6 +38,16 @@
                       action="{{ url_for('rejeitar', solicitacao_id=s['id']) }}">
                     <button type="submit" class="btn-rejeitar">Rejeitar</button>
                 </form>
+                {% elif s["status"] == "aprovada" %}
+                <form class="inline" method="post"
+                      action="{{ url_for('retirar', solicitacao_id=s['id']) }}">
+                    <button type="submit" class="btn-retirar">Registrar retirada</button>
+                </form>
+                {% elif s["status"] == "retirada" %}
+                <form class="inline" method="post"
+                      action="{{ url_for('devolver', solicitacao_id=s['id']) }}">
+                    <button type="submit" class="btn-devolver">Registrar devolução</button>
+                </form>
                 {% else %}
                 -
                 {% endif %}

@@ -159,5 +159,79 @@ def rejeitar(solicitacao_id):
     return mudar_status(solicitacao_id, "rejeitada", "Solicitação rejeitada.")
 
 
+@app.route("/admin/solicitacao/<int:solicitacao_id>/retirar", methods=["POST"])
+def retirar(solicitacao_id):
+    """Registra a retirada: pedido aprovado -> retirada, e diminui o estoque."""
+    conn = get_db()
+    pedido = conn.execute(
+        "SELECT id, material_id, status FROM solicitacoes WHERE id = ?",
+        (solicitacao_id,),
+    ).fetchone()
+
+    if pedido is None:
+        conn.close()
+        abort(404)
+
+    if pedido["status"] != "aprovada":
+        flash("Só é possível registrar a retirada de uma solicitação aprovada.")
+    else:
+        # só diminui se ainda houver unidade disponível
+        resultado = conn.execute(
+            """
+            UPDATE materiais
+            SET quantidade_disponivel = quantidade_disponivel - 1
+            WHERE id = ? AND quantidade_disponivel > 0
+            """,
+            (pedido["material_id"],),
+        )
+        if resultado.rowcount == 0:
+            flash("Não há unidade disponível deste material no momento.")
+        else:
+            conn.execute(
+                "UPDATE solicitacoes SET status = 'retirada' WHERE id = ?",
+                (solicitacao_id,),
+            )
+            conn.commit()
+            flash("Retirada registrada.")
+
+    conn.close()
+    return redirect(url_for("admin"))
+
+
+@app.route("/admin/solicitacao/<int:solicitacao_id>/devolver", methods=["POST"])
+def devolver(solicitacao_id):
+    """Registra a devolução: pedido retirado -> devolvida, e aumenta o estoque."""
+    conn = get_db()
+    pedido = conn.execute(
+        "SELECT id, material_id, status FROM solicitacoes WHERE id = ?",
+        (solicitacao_id,),
+    ).fetchone()
+
+    if pedido is None:
+        conn.close()
+        abort(404)
+
+    if pedido["status"] != "retirada":
+        flash("Só é possível registrar a devolução de um material retirado.")
+    else:
+        conn.execute(
+            """
+            UPDATE materiais
+            SET quantidade_disponivel = quantidade_disponivel + 1
+            WHERE id = ? AND quantidade_disponivel < quantidade_total
+            """,
+            (pedido["material_id"],),
+        )
+        conn.execute(
+            "UPDATE solicitacoes SET status = 'devolvida' WHERE id = ?",
+            (solicitacao_id,),
+        )
+        conn.commit()
+        flash("Devolução registrada.")
+
+    conn.close()
+    return redirect(url_for("admin"))
+
+
 if __name__ == "__main__":
     app.run(debug=True)

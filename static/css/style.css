@@ -289,3 +289,29 @@ body {
 .btn-rejeitar:hover {
     background: #a12a1e;
 }
+
+.btn-retirar,
+.btn-devolver {
+    padding: 4px 12px;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-retirar {
+    background: #1f3a5f;
+}
+
+.btn-retirar:hover {
+    background: #2a4d7d;
+}
+
+.btn-devolver {
+    background: #546e7a;
+}
+
+.btn-devolver:hover {
+    background: #3f5560;
+}
